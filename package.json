@@ -4,13 +4,15 @@
   "private": true,
   "scripts": {
     "start": "webpack serve --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js"
+    "build": "webpack --config webpack.prod.js",
+    "dev": "react-scripts start"
   },
   "dependencies": {
     "jquery": "^3.6.0",
     "lodash": "^4.17.21",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-scripts": "^4.0.3",
     "tailwindcss": "^2.0.1",
     "uuid": "^8.3.2"
   },
@@ -18,10 +20,9 @@
     "@babel/core": "^7.13.16",
     "@babel/preset-env": "^7.13.15",
     "@babel/preset-react": "^7.13.13",
-    "babel-loader": "^8.2.2",
     "copy-webpack-plugin": "^6.2.1",
     "css-loader": "^5.0.1",
-    "css-minimizer-webpack-plugin": "^1.2.0",
+    "css-minimizer-webpack-plugin": "^3.0.2",
     "mini-css-extract-plugin": "^1.3.1",
     "postcss": "^8.1.10",
     "postcss-loader": "^4.1.0",

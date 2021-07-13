@@ -111,7 +111,7 @@ export default function MidArea({state}) {
   }
 
   const onMouseDown= (event)=>{
-    // $(event.target).addClass('dragging')
+    $(event.target).addClass('dragging')
     // console.log('hi 1')
     
     //   console.log('hi 2')
@@ -129,7 +129,7 @@ export default function MidArea({state}) {
 
 
       $(event.target).on("mousemove", moved);
-      event.preventDefault(); // Prevent selection
+      // event.preventDefault(); // Prevent selection
     }
 
   const onMouseUp = (event)=>{
@@ -149,6 +149,6 @@ export default function MidArea({state}) {
    >
      {/* <div id="midArea"></div> */}
     {/* {Object.entries(blocks).map((id, block)=><BlockComponent key={id} block={block} />)} */}
-    {blocks.map((blockId, index)=><BlockComponent key={index}  block={getBlocksCreated(Data.currentSprit, blockId)} />)}
+    {blocks.map((blockId, index)=><BlockComponent key={index} block={getBlocksCreated(Data.currentSprit, blockId)} />)}
   </div>)
 }
