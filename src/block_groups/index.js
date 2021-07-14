@@ -1,5 +1,7 @@
 import  Motion from "../blocks/motion";
 import  Events  from "../blocks/events";
+import Control  from "../blocks/control";
+import Looks  from "../blocks/looks";
 
 // let currentSprit=''
 export let blocksMenu={}
@@ -27,7 +29,7 @@ export const setBlocksCreated = (currentSprit, block)=>{
     blocksCreated={...blocksCreated, [currentSprit]:{...blocksCreated[currentSprit], [block.id]:block}};
 }
 
-const groups = [Events, Motion];
+const groups = [Events, Motion, Control, Looks];
 
 // groups.forEach(group=>group.blocks.forEach(block=>block.execute('vivek')))
 

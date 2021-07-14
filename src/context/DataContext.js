@@ -14,6 +14,7 @@ export function DataProvider({children, ...props}){
     const [blocksCreated, setBlocksCreatedState]=useState({})
     const [blocksMenu, setBlocksMenuState]=useState({})
     const spritRef = useRef();
+    const draggingRef = useRef();
 
     // useEffect(()=>{
     //     changeSprit('sprit1');
@@ -63,6 +64,7 @@ export function DataProvider({children, ...props}){
     const value={
         currentSprit,
         spritRef,
+        draggingRef,
         setCurrentSprit,
         changeSprit,
         getBlocksMenu,

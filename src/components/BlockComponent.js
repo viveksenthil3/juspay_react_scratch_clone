@@ -24,13 +24,25 @@ let elem = [
 ]
 
 
-function BlockComponent({block, isFromMenu, draggingBlock, ...rest}) {
+function BlockComponent({block, isFromMenu, draggingBlock, isBlockRendered, ...rest}) {
     const Data = useData();
     const [state, setState]=useState(block.state);
     const blockRef = useRef('')
 
+    // if(block===undefined || block.getHasTop == undefined || (isBlockRendered && isBlockRendered.current.includes(block.id))){
+    //     console.log('it is undefined ', block)
+    //     return <></>;
+    // }
+
+    // if(!isFromMenu){
+    //     isBlockRendered.current.push(block.id)
+    //     console.log(isBlockRendered)
+    //     console.log(blocksCreated)
+    //     console.log($(blockRef.current).attr('childid'))
+    // }
+
     useEffect(()=>{
-        console.log(blockRef.current.style)
+        // console.log(blockRef.current.style)
     }, [blockRef.current.state])
 
     useEffect(()=>{
@@ -78,6 +90,8 @@ function BlockComponent({block, isFromMenu, draggingBlock, ...rest}) {
             offsetY:e.clientY-rect.top
             
         }))
+
+        Data.draggingRef.current=e.target;
     }
 
     const onMouseDown = (e)=>{
@@ -90,22 +104,25 @@ function BlockComponent({block, isFromMenu, draggingBlock, ...rest}) {
     }
 
     const onDragEnter=(e)=>{
-        console.log('entered')
+        // console.log('entered')
+        let elemBelow = document.elementFromPoint(e.clientX, e.clientY);
+        // console.log($(Data.draggingRef.current).attr('isfrommenu'))
+        // $(elemBelow).hasClass('block-drop') &&
+        if($(Data.draggingRef.current).attr('isfrommenu')!=='true' && $(Data.draggingRef.current).children('.block').hasClass('block-hasTop') && !$(e.target).hasClass('block-drop-active'))
+            $(e.target).addClass('block-drop-active')
     }
 
     const onDragLeave=(e)=>{
-        console.log('left@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-        $('.block-drop').removeClass('block-drop-active')
+        // console.log('left@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+        $(e.target).removeClass('block-drop-active')
     }
 
     const onDragOver=(e)=>{
         e.preventDefault();
 
-        let elemBelow = document.elementFromPoint(e.clientX, e.clientY-10);
-        if($(elemBelow).hasClass('block-drop')  && !$(elemBelow).hasClass('block-drop-active'))
-            $(elemBelow).addClass('block-drop-active')
-        console.log($(e.target))
-        // && $(e.target).hasClass('block-hasTop')
+        
+        // console.log($(Data.draggingRef.current))
+        // && $(Data.draggingRef.current).hasClass('block-hasTop')
     }
 
     const onDrop=(e)=>{
@@ -127,8 +144,10 @@ function BlockComponent({block, isFromMenu, draggingBlock, ...rest}) {
             margin: 0
         })
 
-        parent.setChild(child)
-        parentElem.attr('childid', data.blockId)
+        if(data.dragType=='move'){
+            parent.setChild(child)
+            parentElem.attr('childid', data.blockId)
+        }
         
         setBlocksCreated(Data.currentSprit, parent)
         // console.log('hivevveev', typeof parent)
@@ -143,14 +162,15 @@ function BlockComponent({block, isFromMenu, draggingBlock, ...rest}) {
     }
 
     const onClick = function(e){
-        if(isFromMenu)
+        if(isFromMenu || ['INPUT', 'SELECT'].includes(e.target.tagName))
             return;
 
+        // console.log(e.target.tagName==)
         block.execute({...state, blockId: block.id}, {id:Data.currentSprit, ref:Data.spritRef});
         let parent = $(blockRef.current);
-        parent.css({
-            backgroundColor: 'red'
-        })
+        // parent.css({
+        //     backgroundColor: 'red'
+        // })
 
         // console.log('parent' ,parent)
 
@@ -169,29 +189,30 @@ function BlockComponent({block, isFromMenu, draggingBlock, ...rest}) {
     return (
         <div 
             ref={blockRef}
+            isfrommenu={''+isFromMenu}
             onDragStart={(e)=>onDragStart(e)}
             draggable
             onClick={onClick}            
             onMouseDown={onMouseDown}
             style={block.style || {}}
-            className={`dragableBox my-4`}
+            className={`dragableBox ${isFromMenu ? 'my-6' : 'my-4'}`}
             blockid={block.id}
             >
-            <div blockid={block.id} className={`block-${block.getHasTop() ? 'has' : 'notHas'}Top block-${block.getHasBottom() ? 'has' : 'notHas'}Bottom block flex flex-row whitespace-nowrap  text-white px-2 py-2  max-w-min text-sm  cursor-pointe relative ${block.groupProperties.blockClasses} ${block.className || ''}`}>
+            <div blockid={block.id} className={`block-${block.getHasTop() ? 'has' : 'notHas'}Top block-${block.getHasBottom() ? 'has' : 'notHas'}Bottom block flex flex-row whitespace-nowrap  text-white px-2 py-2  max-w-min text-sm rounded cursor-pointe relative ${block.groupProperties.blockClasses} ${block.className || ''}`}>
                 {block.parts.map((part, index)=>part.type==='string' ? <span key={index}>{part.text}</span> : <part.Component  key={index} state={state} setState={setState} {...part.props}/>)}
             </div>
 
-            <div
+            {block.getHasBottom() && <div
                 blockid={block.id}
                 onMouseOver={(e)=>{console.log(e.buttons)}}
                 onDragEnter={onDragEnter}
                 onDragOver={onDragOver}
                 onDragLeave={onDragLeave}
                 onDrop={onDrop}
-                className={`h-7 w-full bg-green-100 relative ${!isFromMenu && 'block-drop'}`}
+                className={`w-full bg-gree-100 relative ${!isFromMenu && 'block-drop h-7'}`}
             >
-
-            </div>
+                {/* {block.child ? <BlockComponent key={0} isBlockRendered={isBlockRendered} block={getBlocksCreated(Data.currentSprit, block.child.id)} /> : null} */}
+            </div>}
         </div>
     )
 }

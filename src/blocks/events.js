@@ -27,6 +27,14 @@ whenStartClicked.execute = (state, sprit)=>{
     console.log('whenStartClicked ', state);
 }
 
+whenStartClicked.init = (state, sprit)=>{
+    // console.log(document.getElementById(sprit))
+    $('.flag').on('click', function(e){
+        // console.log('sprit clicked')
+        $('.dragableBox').filter(`[blockid='${state.blockId}']`).trigger('click')
+    })
+}
+
 Events.blocks.push(whenStartClicked)
 
 

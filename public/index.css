@@ -76,3 +76,35 @@ input:focus-visible{
 .dragging{
   /* z-index: 20; */
 }
+
+.flag{
+  position: fixed;
+  top: 4px;
+  cursor: pointer;
+}
+
+.sayMessage {
+    visibility: hidden;
+    width: 120px;
+    background-color: rgb(214 214 214);
+    color: black;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    z-index: 1;
+}
+
+.sayMessageVisible{
+  visibility: visible;
+}
+
+.text-shadow{
+  text-shadow: 5px 5px 30px #00000091;
+}
+
+.sprit{
+  height: fit-content;
+}

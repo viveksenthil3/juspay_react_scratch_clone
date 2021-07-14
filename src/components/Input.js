@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 function Input({type, stateVar, state, setState, ...rest}) {
     useEffect(()=>{
-        console.log(state, stateVar, state[stateVar])
+        // console.log(state, stateVar, state[stateVar])
     },[])
     
     return (

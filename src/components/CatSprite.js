@@ -1,9 +1,11 @@
 import React, { forwardRef } from "react";
 
-const CatSprite=forwardRef((props, ref)=> <svg
-    {...props}
-    ref={ref}
-    direction={0}
+const CatSprite=forwardRef((props, ref)=> <div
+{...props}
+ref={ref}
+direction={0}
+>
+  <svg    
     xmlns="http://www.w3.org/2000/svg"
     width="95.17898101806641"
     height="100.04156036376953"
@@ -181,6 +183,7 @@ const CatSprite=forwardRef((props, ref)=> <svg
       </g>
     </g>
   </svg>
-);
+  <span className="sayMessage"></span>
+</div>);
    
 export default CatSprite; 

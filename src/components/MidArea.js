@@ -25,6 +25,7 @@ import Input from "./Input";
 export default function MidArea({state}) {
   const Data = useData();
   const [blocks, setBlocks] = useState([])
+  let isBlockRendered = useRef([])
   const draggingBlock = useRef()
   let lastX,lastY, maxX, maxY, minX, minY;
 
@@ -49,7 +50,9 @@ export default function MidArea({state}) {
 
       setBlocksCreated(Data.currentSprit, block);
       
+      // isBlockRendered.current=[];
       setBlocks(blocks=>([...blocks, block.id]))
+      
     }
         
   }
@@ -142,6 +145,15 @@ export default function MidArea({state}) {
     // $(event.target).off("mousemove", moved);
   }
 
+  const generateBlock = (blockId, index)=>{
+    // console.log(isBlockRendered)
+    // if(!isBlockRendered.current.includes(blockId)){
+    //   console.log('hi vivek')
+      // isBlockRendered.push(blockId);
+      return <BlockComponent key={index} isBlockRendered={isBlockRendered} block={getBlocksCreated(Data.currentSprit, blockId)} />
+    // }
+  }
+
   return (
   <div
    id="midArea"
@@ -152,8 +164,10 @@ export default function MidArea({state}) {
    onMouseDown={onMouseDown}
    onMouseUp={onMouseUp}
    >
+     {/* <div>{isBlockRendered.map(d=>d)}</div> */}
+     
      {/* <div id="midArea"></div> */}
     {/* {Object.entries(blocks).map((id, block)=><BlockComponent key={id} block={block} />)} */}
-    {blocks.map((blockId, index)=><BlockComponent key={index} block={getBlocksCreated(Data.currentSprit, blockId)} />)}
+    {blocks.map(generateBlock)}
   </div>)
 }
