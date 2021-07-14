@@ -17,6 +17,7 @@ export const setBlocksMenu = (currentSprit, blocks={})=>{
 }
 
 export const getBlocksCreated = (currentSprit, blockId)=>{
+    // console.log(' getBlocksCreated ', currentSprit, blockId)
     if(blockId)
         return blocksCreated[currentSprit][blockId];
     return blocksCreated[currentSprit]

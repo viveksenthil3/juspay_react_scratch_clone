@@ -36,9 +36,9 @@ export default function MidArea({state}) {
     
     if(data.dragType=='copy'){
       
-      let block = getBlocksMenu(Data.currentSprit, data.blockId)
+      let block = getBlocksMenu(Data.currentSprit, data.origId)
       block = block.clone();
-
+      block.id=data.blockId;
       // const rect = e.target.getBoundingClientRect()
       
       block.style={
@@ -69,12 +69,13 @@ export default function MidArea({state}) {
   // }, [Data.currentSprit])
 
   const onDragEnter = (e) => {
-    
+    // console.log(Data.spritRef.current)
   }
 
   const onDragOver = (e)=>{
     e.preventDefault();   
-    
+    // console.log('hello')
+    moved(e)
   }
 
   
@@ -95,7 +96,7 @@ export default function MidArea({state}) {
       }
       
       var targetX = offset.left + distX+0;
-      var targetY = offset.top + distY-20;
+      var targetY = offset.top + distY-16;
 
       // console.log(maxX)
       // console.log(Math.min(maxX, Math.max(minX, targetX)), Math.min(maxY, Math.max(minY, targetY)) )
@@ -111,7 +112,10 @@ export default function MidArea({state}) {
   }
 
   const onMouseDown= (event)=>{
-    $(event.target).addClass('dragging')
+    // if(!$(event.target).hasClass('dragableBox'))
+    //   return
+
+    // $(event.target).addClass('dragging')
     // console.log('hi 1')
     
     //   console.log('hi 2')
@@ -128,13 +132,14 @@ export default function MidArea({state}) {
       minX=sidebar.left;
 
 
-      $(event.target).on("mousemove", moved);
+      // $(event.target).on("mousemove", moved);
+      // console.log(event.target)
       // event.preventDefault(); // Prevent selection
     }
 
   const onMouseUp = (event)=>{
-    $('.dragging').removeClass('dragging')
-    $(event.target).off("mousemove", moved);
+    // $('.dragging').removeClass('dragging')
+    // $(event.target).off("mousemove", moved);
   }
 
   return (

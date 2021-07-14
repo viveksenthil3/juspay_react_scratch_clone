@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import _ from 'lodash'
 
 const DataContext = React.createContext({});
@@ -13,6 +13,7 @@ export function DataProvider({children, ...props}){
     const [currentSprit, setCurrentSprit]=useState("sprit1")
     const [blocksCreated, setBlocksCreatedState]=useState({})
     const [blocksMenu, setBlocksMenuState]=useState({})
+    const spritRef = useRef();
 
     // useEffect(()=>{
     //     changeSprit('sprit1');
@@ -61,6 +62,7 @@ export function DataProvider({children, ...props}){
 
     const value={
         currentSprit,
+        spritRef,
         setCurrentSprit,
         changeSprit,
         getBlocksMenu,

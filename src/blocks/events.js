@@ -2,6 +2,7 @@ import { Block } from ".";
 import {Events} from "../block_groups/events";
 import Icon from "../components/Icon";
 import Input from "../components/Input";
+import $ from 'jquery'
 
 // when start clicked block
 const whenStartClicked = new Block([
@@ -22,8 +23,8 @@ const whenStartClicked = new Block([
     }
 ], false, true, Events.properties, {}) 
 
-whenStartClicked.execute = (data)=>{
-    console.log('whenStartClicked ', data);
+whenStartClicked.execute = (state, sprit)=>{
+    console.log('whenStartClicked ', state);
 }
 
 Events.blocks.push(whenStartClicked)
@@ -37,8 +38,17 @@ const whenSpiritClicked = new Block([
     }
 ], false, true, Events.properties, {}) 
 
-whenSpiritClicked.execute = (data)=>{
-    console.log('whenSpiritClicked', data);
+
+whenSpiritClicked.execute = (state, sprit)=>{
+    console.log('whenSpiritClicked', state);
+}
+
+whenSpiritClicked.init = (state, sprit)=>{
+    // console.log(document.getElementById(sprit))
+    sprit.ref.current.addEventListener('click', function(e){
+        // console.log('sprit clicked')
+        $('.dragableBox').filter(`[blockid='${state.blockId}']`).trigger('click')
+    })
 }
 
 Events.blocks.push(whenSpiritClicked)

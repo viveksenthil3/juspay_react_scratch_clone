@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import { blocksCreated, blocksMenu, getBlocksCreated } from '../block_groups';
 
 export class Block{
     constructor(parts, hasTop, hasBottom, groupProperties, state){
@@ -11,16 +12,27 @@ export class Block{
         this.state={...state}
     }
 
+    init(state, sprit){
+        // add event listeners
+        console.log('init')
+    }
+
 
     clone(){
-        const copy = Object.assign(Object.create(Object.getPrototypeOf(this)), this);
-        copy.id = uuidv4();
+        // const copy = Object.assign(Object.create(Object.getPrototypeOf(this)), this);
+        // copy.id = uuidv4();
+        let copy = new Block(this.parts, this.hasTop, this.hasBottom, this.groupProperties, this.state);
+        copy.child=this.child;
+        copy.execute=this.execute
+        copy.init=this.init
         return copy;
     }
 
-    next(){
-        if(this.child)
-            this.child.execute()
+    next(sprit){
+        const child = getBlocksCreated(sprit, this.id)
+        // console.log('next', child, sprit, this.id, blocksCreated, blocksMenu)
+        if(child)
+            child.execute()
     }
 
     getChild(){
@@ -28,6 +40,7 @@ export class Block{
     }
 
     setChild(child){
+        // console.log('child ', child)
         this.child=child;
     }
 
@@ -53,5 +66,6 @@ export class Block{
 
     execute(state, sprit){
         console.log('executed');
+        this.next()
     }
 }
